@@ -1,0 +1,9 @@
+node_modules
+.dist
+coverage
+dist
+.env
+*.log
+.DS_Store
+build.md
+continue.md
