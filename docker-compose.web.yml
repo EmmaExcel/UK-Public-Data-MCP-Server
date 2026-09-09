@@ -1,0 +1,26 @@
+services:
+  uk-public-data-mcp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      NODE_ENV: production
+      LOG_LEVEL: info
+      MCP_TRANSPORT: http
+      PORT: 3000
+      COMPANIES_HOUSE_API_KEY: ${COMPANIES_HOUSE_API_KEY:?set your Companies House key}
+      ODS_BASE_URL: ${ODS_BASE_URL:-https://directory.spineservices.nhs.uk/ORD/2-0-0/organisations}
+    restart: unless-stopped
+    # No public ports: only the Inspector can reach /mcp on the shared network.
+
+  inspector:
+    image: ghcr.io/modelcontextprotocol/inspector:latest
+    environment:
+      HOST: 0.0.0.0
+      MCP_PROXY_AUTH_TOKEN: ${INSPECTOR_TOKEN:?generate a token}
+    ports:
+      - "6274:6274"   # Inspector web UI
+      - "6277:6277"   # Inspector proxy (browser connects here)
+    depends_on:
+      - uk-public-data-mcp
+    restart: unless-stopped
