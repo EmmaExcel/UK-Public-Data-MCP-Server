@@ -1,0 +1,64 @@
+{
+  "search": {
+    "items": [
+      {
+        "company_number": "12345678",
+        "title": "EXAMPLE UK LIMITED",
+        "company_status": "active",
+        "company_type": "ltd",
+        "date_of_creation": "2015-01-01",
+        "registered_office_address": {
+          "address_line_1": "1 Example Street",
+          "locality": "London",
+          "postal_code": "SW1A 1AA"
+        },
+        "links": { "self": "/company/12345678" }
+      }
+    ],
+    "total_results": 1
+  },
+  "profile": {
+    "company_name": "EXAMPLE UK LIMITED",
+    "company_number": "12345678",
+    "company_status": "active",
+    "type": "ltd",
+    "date_of_creation": "2015-01-01",
+    "registered_office_address": {
+      "address_line_1": "1 Example Street",
+      "locality": "London",
+      "postal_code": "SW1A 1AA"
+    },
+    "sic_codes": ["62020"],
+    "accounts": { "next_due": "2026-12-31" },
+    "confirmation_statement": { "next_due": "2026-06-30" },
+    "jurisdiction": "england-wales",
+    "has_been_liquidated": false,
+    "links": { "self": "/company/12345678" }
+  },
+  "officers": {
+    "items": [
+      {
+        "name": "JANE DOE",
+        "officer_role": "director",
+        "appointed_on": "2015-01-01",
+        "nationality": "British",
+        "occupation": "Director",
+        "country_of_residence": "England",
+        "links": { "officer": { "appointments": "/officers/abc/appointments" } }
+      }
+    ],
+    "total_results": 1
+  },
+  "filing_history": {
+    "items": [
+      {
+        "date": "2025-01-31",
+        "category": "confirmation-statement",
+        "description": "confirmation-statement-with-no-updates",
+        "transaction_id": "MzA0MTAw",
+        "links": { "self": "/company/12345678/filing-history/MzA0MTAw" }
+      }
+    ],
+    "total_results": 1
+  }
+}

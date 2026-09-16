@@ -1,0 +1,37 @@
+{
+  "england-and-wales": {
+    "division": "england-and-wales",
+    "events": [
+      {
+        "title": "New Year's Day",
+        "date": "2026-01-01",
+        "notes": "",
+        "bunting": true
+      },
+      {
+        "title": "Good Friday",
+        "date": "2026-04-03",
+        "notes": "",
+        "bunting": false
+      },
+      {
+        "title": "Christmas Day",
+        "date": "2026-12-25",
+        "notes": "",
+        "bunting": true
+      }
+    ]
+  },
+  "scotland": {
+    "division": "scotland",
+    "events": [
+      { "title": "New Year's Day", "date": "2026-01-01", "notes": "", "bunting": true }
+    ]
+  },
+  "northern-ireland": {
+    "division": "northern-ireland",
+    "events": [
+      { "title": "New Year's Day", "date": "2026-01-01", "notes": "", "bunting": true }
+    ]
+  }
+}

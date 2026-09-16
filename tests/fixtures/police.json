@@ -1,0 +1,29 @@
+{
+  "forces": [
+    { "id": "city-of-london", "name": "City of London Police" },
+    { "id": "metropolitan", "name": "Metropolitan Police Service" }
+  ],
+  "neighbourhoods": [
+    {
+      "id": "neighbourhood-1",
+      "name": "Westminster",
+      "description": "Westminster neighbourhood policing team",
+      "links": [{ "url": "https://www.police.uk" }]
+    }
+  ],
+  "crimes": [
+    {
+      "category": "anti-social-behaviour",
+      "location_type": "Force",
+      "month": "2026-01",
+      "outcome_status": { "category": "Under investigation", "date": "2026-02" },
+      "location": {
+        "latitude": "51.501",
+        "longitude": "-0.141",
+        "street": { "id": 1, "name": "On or near Example Street" }
+      },
+      "persistent_id": "abc123",
+      "context": ""
+    }
+  ]
+}

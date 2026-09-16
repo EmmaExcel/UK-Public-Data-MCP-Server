@@ -1,0 +1,60 @@
+{
+  "lookup": {
+    "Organisation": {
+      "Name": "EXAMPLE NHS TRUST",
+      "OrgId": { "extension": "RJ1" },
+      "Status": "Active",
+      "GeoLoc": {
+        "Location": {
+          "AddrLn1": "1 Example Road",
+          "Town": "London",
+          "PostCode": "SW1A 1AA",
+          "Country": "ENGLAND"
+        }
+      },
+      "Contacts": {
+        "Contact": [{ "type": "tel", "value": "020 0000 0000" }]
+      },
+      "Roles": {
+        "Role": [{ "id": "RO197", "primaryRole": true, "Status": "Active" }]
+      },
+      "Rels": {
+        "Rel": [
+          {
+            "Status": "Active",
+            "id": "RE4",
+            "Target": {
+              "OrgId": { "extension": "Q00" },
+              "PrimaryRoleId": { "id": "RO132" }
+            }
+          }
+        ]
+      },
+      "Date": [{ "Type": "Operational", "Start": "2015-01-01" }]
+    }
+  },
+  "search": {
+    "Organisations": [
+      {
+        "Name": "EXAMPLE NHS TRUST",
+        "OrgId": "RJ1",
+        "Status": "Active",
+        "PostCode": "SW1A 1AA",
+        "PrimaryRoleId": "RO197",
+        "PrimaryRoleDescription": "NHS TRUST"
+      }
+    ]
+  },
+  "by_postcode": {
+    "Organisations": [
+      {
+        "Name": "EXAMPLE NHS TRUST",
+        "OrgId": "RJ1",
+        "Status": "Active",
+        "PostCode": "SW1A 1AA",
+        "PrimaryRoleId": "RO197",
+        "PrimaryRoleDescription": "NHS TRUST"
+      }
+    ]
+  }
+}
