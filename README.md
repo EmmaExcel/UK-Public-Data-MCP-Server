@@ -197,25 +197,29 @@ The image runs as the non-root `node` user.
 
 ## Deploy to Render (one click)
 
-The repository includes a Render Blueprint (`render.yaml`) that deploys the MCP
-server as a free web service:
+The repository includes a Render Blueprint (`render.yaml`) that deploys two free
+services:
 
 - **uk-public-data-mcp** — the MCP server in HTTP mode.
+- **uk-public-data-mcp-inspector** — a hosted MCP Inspector web UI for trying the tools.
 
 Steps:
 
 1. Push this repo to GitHub.
 2. In Render: **New → Blueprint → connect the GitHub repo**.
-3. Enter `COMPANIES_HOUSE_API_KEY` when prompted (it is marked `sync: false`, so it is never stored in the repo).
+3. Enter `COMPANIES_HOUSE_API_KEY` and `MCP_PROXY_AUTH_TOKEN` when prompted (both are `sync: false`, so they are never stored in the repo).
 4. Deploy.
 
-The MCP server is then available at `https://uk-public-data-mcp.onrender.com/mcp`
-(health check at `/health`). Free Render instances sleep after inactivity, so
-the first request after idle may take a minute to wake up.
+After deployment:
 
-For a free hosted web frontend (Open WebUI with MCP support), see the
-[`huggingface-space`](./huggingface-space/README.md) folder — it deploys the UI
-to Hugging Face Spaces for free and connects to the Render MCP URL.
+- MCP server: `https://uk-public-data-mcp.onrender.com/mcp` (health check at `/health`)
+- Inspector UI: `https://uk-public-data-mcp-inspector.onrender.com/?MCP_PROXY_AUTH_TOKEN=<your-token>`
+
+In the Inspector, select **Streamable HTTP**, enter
+`https://uk-public-data-mcp.onrender.com/mcp`, and click **Connect**.
+
+Free Render instances sleep after inactivity, so the first request after idle
+may take a minute to wake up.
 
 ## Testing
 

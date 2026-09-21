@@ -15,3 +15,14 @@ services:
         sync: false
       - key: ODS_BASE_URL
         value: https://directory.spineservices.nhs.uk/ORD/2-0-0/organisations
+
+  - type: web
+    name: uk-public-data-mcp-inspector
+    runtime: docker
+    plan: free
+    dockerfilePath: ./inspector-render/Dockerfile
+    dockerContext: ./inspector-render
+    healthCheckPath: /
+    envVars:
+      - key: MCP_PROXY_AUTH_TOKEN
+        sync: false
