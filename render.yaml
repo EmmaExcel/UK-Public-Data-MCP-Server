@@ -23,8 +23,3 @@ services:
     dockerfilePath: ./inspector-render/Dockerfile
     dockerContext: ./inspector-render
     healthCheckPath: /
-    envVars:
-      - key: MCP_PROXY_USERNAME
-        sync: false
-      - key: MCP_PROXY_PASSWORD
-        sync: false
