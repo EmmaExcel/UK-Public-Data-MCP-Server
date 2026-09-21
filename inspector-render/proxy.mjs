@@ -5,6 +5,17 @@ const PORT = Number(process.env.PORT || 10000);
 const CLIENT_TARGET = 'http://127.0.0.1:6274';
 const PROXY_TARGET = 'http://127.0.0.1:6277';
 
+const AUTH_USERNAME = process.env.MCP_PROXY_USERNAME;
+const AUTH_PASSWORD = process.env.MCP_PROXY_PASSWORD;
+
+function isAuthorized(req) {
+  if (!AUTH_USERNAME || !AUTH_PASSWORD) {
+    return true;
+  }
+  const expected = `Basic ${Buffer.from(`${AUTH_USERNAME}:${AUTH_PASSWORD}`).toString('base64')}`;
+  return req.headers.authorization === expected;
+}
+
 const proxy = httpProxy.createProxyServer({
   ws: true,
   xfwd: true,
@@ -27,10 +38,20 @@ function targetFor(url = '/') {
 }
 
 const server = http.createServer((req, res) => {
+  if (!isAuthorized(req)) {
+    res.writeHead(401, { 'WWW-Authenticate': 'Basic realm="MCP Inspector"' });
+    res.end('Unauthorized');
+    return;
+  }
   proxy.web(req, res, { target: targetFor(req.url ?? '/') });
 });
 
 server.on('upgrade', (req, socket, head) => {
+  if (!isAuthorized(req)) {
+    socket.write('HTTP/1.1 401 Unauthorized\r\n\r\n');
+    socket.destroy();
+    return;
+  }
   proxy.ws(req, socket, head, { target: targetFor(req.url ?? '/') });
 });
 

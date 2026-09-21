@@ -207,13 +207,13 @@ Steps:
 
 1. Push this repo to GitHub.
 2. In Render: **New → Blueprint → connect the GitHub repo**.
-3. Enter `COMPANIES_HOUSE_API_KEY` and `MCP_PROXY_AUTH_TOKEN` when prompted (both are `sync: false`, so they are never stored in the repo).
+3. Enter `COMPANIES_HOUSE_API_KEY`, `MCP_PROXY_USERNAME`, and `MCP_PROXY_PASSWORD` when prompted (all are `sync: false`, so they are never stored in the repo).
 4. Deploy.
 
 After deployment:
 
 - MCP server: `https://uk-public-data-mcp.onrender.com/mcp` (health check at `/health`)
-- Inspector UI: `https://uk-public-data-mcp-inspector.onrender.com/?MCP_PROXY_AUTH_TOKEN=<your-token>`
+- Inspector UI: `https://uk-public-data-mcp-inspector.onrender.com` (protected by the basic-auth username/password you set)
 
 In the Inspector, select **Streamable HTTP**, enter
 `https://uk-public-data-mcp.onrender.com/mcp`, and click **Connect**.
