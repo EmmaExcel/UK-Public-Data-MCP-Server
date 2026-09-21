@@ -19,7 +19,7 @@ services:
   - type: web
     name: uk-public-data-mcp-ui
     runtime: image
-    plan: free
+    plan: starter
     image:
       url: ghcr.io/open-webui/open-webui:main
     envVars:
