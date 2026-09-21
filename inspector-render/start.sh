@@ -2,6 +2,8 @@
 set -e
 
 export MCP_PROXY_FULL_ADDRESS="${MCP_PROXY_FULL_ADDRESS:-${RENDER_EXTERNAL_URL:-http://localhost:${PORT}}}"
+export MCP_PROXY_AUTH_TOKEN="${MCP_PROXY_AUTH_TOKEN:-uk-public-data-demo}"
+export DANGEROUSLY_OMIT_AUTH="${DANGEROUSLY_OMIT_AUTH:-true}"
 
 mcp-inspector &
 INSPECTOR_PID=$!
