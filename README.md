@@ -197,10 +197,10 @@ The image runs as the non-root `node` user.
 
 ## Deploy to Render (one click)
 
-The repository includes a Render Blueprint (`render.yaml`) that deploys two services:
+The repository includes a Render Blueprint (`render.yaml`) that deploys the MCP
+server as a free web service:
 
-1. **uk-public-data-mcp** — the MCP server in HTTP mode.
-2. **uk-public-data-mcp-ui** — Open WebUI, a hosted chat frontend with MCP support.
+- **uk-public-data-mcp** — the MCP server in HTTP mode.
 
 Steps:
 
@@ -209,17 +209,13 @@ Steps:
 3. Enter `COMPANIES_HOUSE_API_KEY` when prompted (it is marked `sync: false`, so it is never stored in the repo).
 4. Deploy.
 
-After both services are live:
+The MCP server is then available at `https://uk-public-data-mcp.onrender.com/mcp`
+(health check at `/health`). Free Render instances sleep after inactivity, so
+the first request after idle may take a minute to wake up.
 
-- MCP server URL: `https://uk-public-data-mcp.onrender.com/mcp` (health: `/health`)
-- Open WebUI URL: `https://uk-public-data-mcp-ui.onrender.com`
-
-In Open WebUI, configure an LLM backend (**Settings → Connections**), then add the MCP server under **Admin Panel → Settings → Tools → MCP Servers**:
-
-- **URL:** `https://uk-public-data-mcp.onrender.com/mcp`
-- **Transport:** `Streamable HTTP`
-
-Free Render instances sleep after inactivity, so the first request after idle may take a minute to wake up.
+For a free hosted web frontend (Open WebUI with MCP support), see the
+[`huggingface-space`](./huggingface-space/README.md) folder — it deploys the UI
+to Hugging Face Spaces for free and connects to the Render MCP URL.
 
 ## Testing
 

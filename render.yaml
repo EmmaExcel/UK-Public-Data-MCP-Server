@@ -15,13 +15,3 @@ services:
         sync: false
       - key: ODS_BASE_URL
         value: https://directory.spineservices.nhs.uk/ORD/2-0-0/organisations
-
-  - type: web
-    name: uk-public-data-mcp-ui
-    runtime: image
-    plan: starter
-    image:
-      url: ghcr.io/open-webui/open-webui:main
-    envVars:
-      - key: WEBUI_AUTH
-        value: "true"
