@@ -195,6 +195,32 @@ docker compose up --build
 
 The image runs as the non-root `node` user.
 
+## Deploy to Render (one click)
+
+The repository includes a Render Blueprint (`render.yaml`) that deploys two services:
+
+1. **uk-public-data-mcp** — the MCP server in HTTP mode.
+2. **uk-public-data-mcp-ui** — Open WebUI, a hosted chat frontend with MCP support.
+
+Steps:
+
+1. Push this repo to GitHub.
+2. In Render: **New → Blueprint → connect the GitHub repo**.
+3. Enter `COMPANIES_HOUSE_API_KEY` when prompted (it is marked `sync: false`, so it is never stored in the repo).
+4. Deploy.
+
+After both services are live:
+
+- MCP server URL: `https://uk-public-data-mcp.onrender.com/mcp` (health: `/health`)
+- Open WebUI URL: `https://uk-public-data-mcp-ui.onrender.com`
+
+In Open WebUI, configure an LLM backend (**Settings → Connections**), then add the MCP server under **Admin Panel → Settings → Tools → MCP Servers**:
+
+- **URL:** `https://uk-public-data-mcp.onrender.com/mcp`
+- **Transport:** `Streamable HTTP`
+
+Free Render instances sleep after inactivity, so the first request after idle may take a minute to wake up.
+
 ## Testing
 
 ```bash

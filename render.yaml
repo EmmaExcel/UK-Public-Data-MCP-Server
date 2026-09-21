@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: uk-public-data-mcp
+    runtime: docker
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: LOG_LEVEL
+        value: info
+      - key: MCP_TRANSPORT
+        value: http
+      - key: COMPANIES_HOUSE_API_KEY
+        sync: false
+      - key: ODS_BASE_URL
+        value: https://directory.spineservices.nhs.uk/ORD/2-0-0/organisations
+
+  - type: web
+    name: uk-public-data-mcp-ui
+    runtime: image
+    plan: free
+    image:
+      url: ghcr.io/open-webui/open-webui:main
+    envVars:
+      - key: WEBUI_AUTH
+        value: "true"
