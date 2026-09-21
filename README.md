@@ -213,7 +213,11 @@ Steps:
 After deployment:
 
 - MCP server: `https://uk-public-data-mcp.onrender.com/mcp` (health check at `/health`)
-- Inspector UI: `https://uk-public-data-mcp-inspector.onrender.com` (open access)
+- Inspector UI: use this exact URL (it passes the proxy address and demo token the Inspector UI needs):
+
+```
+https://uk-public-data-mcp-inspector.onrender.com/?MCP_PROXY_FULL_ADDRESS=https://uk-public-data-mcp-inspector.onrender.com&MCP_PROXY_AUTH_TOKEN=uk-public-data-demo
+```
 
 In the Inspector, select **Streamable HTTP**, enter
 `https://uk-public-data-mcp.onrender.com/mcp`, and click **Connect**.
