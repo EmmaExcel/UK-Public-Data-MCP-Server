@@ -30,13 +30,13 @@ Every tool call flows through a shared runner that:
 
 ## Supported data sources
 
-| Source | Base URL | Auth |
-| --- | --- | --- |
-| postcodes.io | `https://api.postcodes.io` | none |
-| Companies House | `https://api.company-information.service.gov.uk` | `COMPANIES_HOUSE_API_KEY` (HTTP Basic) |
-| NHS ODS | `ODS_BASE_URL` (default `https://directory.spineservices.nhs.uk/ORD/2-0-0/organisations`) | none |
-| police.uk | `https://data.police.uk/api` | none |
-| GOV.UK bank holidays | `https://www.gov.uk/bank-holidays.json` | none |
+| Source               | Base URL                                                                                  | Auth                                   |
+| -------------------- | ----------------------------------------------------------------------------------------- | -------------------------------------- |
+| postcodes.io         | `https://api.postcodes.io`                                                                | none                                   |
+| Companies House      | `https://api.company-information.service.gov.uk`                                          | `COMPANIES_HOUSE_API_KEY` (HTTP Basic) |
+| NHS ODS              | `ODS_BASE_URL` (default `https://directory.spineservices.nhs.uk/ORD/2-0-0/organisations`) | none                                   |
+| police.uk            | `https://data.police.uk/api`                                                              | none                                   |
+| GOV.UK bank holidays | `https://www.gov.uk/bank-holidays.json`                                                   | none                                   |
 
 ## Tool catalogue
 
@@ -88,7 +88,10 @@ All Companies House tools require `COMPANIES_HOUSE_API_KEY`.
 ```
 
 ```json
-{ "tool": "police_crimes_at_location", "arguments": { "latitude": 51.501, "longitude": -0.141, "date": "2026-01" } }
+{
+  "tool": "police_crimes_at_location",
+  "arguments": { "latitude": 51.501, "longitude": -0.141, "date": "2026-01" }
+}
 ```
 
 ```json
@@ -120,28 +123,28 @@ All Companies House tools require `COMPANIES_HOUSE_API_KEY`.
 
 Configuration is validated with Zod at startup. Invalid configuration fails fast with a clear error. A missing `COMPANIES_HOUSE_API_KEY` is allowed at startup; only Companies House tool calls return `CONFIGURATION_ERROR` until the key is provided.
 
-| Variable | Default | Description |
-| --- | --- | --- |
-| `NODE_ENV` | `development` | Runtime environment |
-| `LOG_LEVEL` | `info` | Pino log level |
-| `MCP_TRANSPORT` | `stdio` | `stdio` or `http` |
-| `PORT` | `3000` | HTTP port (HTTP transport only) |
-| `COMPANIES_HOUSE_API_KEY` | — | Companies House API key |
-| `COMPANIES_HOUSE_BASE_URL` | `https://api.company-information.service.gov.uk` | Companies House API base URL (use `https://api-sandbox.company-information.service.gov.uk` for a test/sandbox key) |
-| `ODS_BASE_URL` | `https://directory.spineservices.nhs.uk/ORD/2-0-0/organisations` | NHS ODS endpoint base |
-| `HTTP_TIMEOUT_MS` | `10000` | Per-request upstream timeout |
-| `HTTP_MAX_RETRIES` | `3` | Max retry attempts per GET request |
-| `RATE_LIMIT_REQUESTS` | `60` | Global requests per window per client |
-| `RATE_LIMIT_WINDOW_MS` | `60000` | Global rate-limit window |
-| `COMPANIES_HOUSE_RATE_LIMIT_REQUESTS` | `30` | Per-minute Companies House throttle |
-| `POLICE_RATE_LIMIT_REQUESTS` | `30` | Per-minute police.uk throttle |
-| `UPSTREAM_CONCURRENCY` | `4` | Max simultaneous requests per upstream |
-| `CACHE_ENABLED` | `true` | Enable the in-memory TTL cache |
-| `POSTCODES_CACHE_TTL_MS` | `86400000` | Postcodes cache TTL (24 h) |
-| `COMPANIES_HOUSE_CACHE_TTL_MS` | `900000` | Companies House cache TTL (15 min) |
-| `ODS_CACHE_TTL_MS` | `86400000` | ODS cache TTL (24 h) |
-| `POLICE_CACHE_TTL_MS` | `300000` | police.uk cache TTL (5 min) |
-| `BANK_HOLIDAYS_CACHE_TTL_MS` | `43200000` | Bank holidays cache TTL (12 h) |
+| Variable                              | Default                                                          | Description                                                                                                        |
+| ------------------------------------- | ---------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| `NODE_ENV`                            | `development`                                                    | Runtime environment                                                                                                |
+| `LOG_LEVEL`                           | `info`                                                           | Pino log level                                                                                                     |
+| `MCP_TRANSPORT`                       | `stdio`                                                          | `stdio` or `http`                                                                                                  |
+| `PORT`                                | `3000`                                                           | HTTP port (HTTP transport only)                                                                                    |
+| `COMPANIES_HOUSE_API_KEY`             | —                                                                | Companies House API key                                                                                            |
+| `COMPANIES_HOUSE_BASE_URL`            | `https://api.company-information.service.gov.uk`                 | Companies House API base URL (use `https://api-sandbox.company-information.service.gov.uk` for a test/sandbox key) |
+| `ODS_BASE_URL`                        | `https://directory.spineservices.nhs.uk/ORD/2-0-0/organisations` | NHS ODS endpoint base                                                                                              |
+| `HTTP_TIMEOUT_MS`                     | `10000`                                                          | Per-request upstream timeout                                                                                       |
+| `HTTP_MAX_RETRIES`                    | `3`                                                              | Max retry attempts per GET request                                                                                 |
+| `RATE_LIMIT_REQUESTS`                 | `60`                                                             | Global requests per window per client                                                                              |
+| `RATE_LIMIT_WINDOW_MS`                | `60000`                                                          | Global rate-limit window                                                                                           |
+| `COMPANIES_HOUSE_RATE_LIMIT_REQUESTS` | `30`                                                             | Per-minute Companies House throttle                                                                                |
+| `POLICE_RATE_LIMIT_REQUESTS`          | `30`                                                             | Per-minute police.uk throttle                                                                                      |
+| `UPSTREAM_CONCURRENCY`                | `4`                                                              | Max simultaneous requests per upstream                                                                             |
+| `CACHE_ENABLED`                       | `true`                                                           | Enable the in-memory TTL cache                                                                                     |
+| `POSTCODES_CACHE_TTL_MS`              | `86400000`                                                       | Postcodes cache TTL (24 h)                                                                                         |
+| `COMPANIES_HOUSE_CACHE_TTL_MS`        | `900000`                                                         | Companies House cache TTL (15 min)                                                                                 |
+| `ODS_CACHE_TTL_MS`                    | `86400000`                                                       | ODS cache TTL (24 h)                                                                                               |
+| `POLICE_CACHE_TTL_MS`                 | `300000`                                                         | police.uk cache TTL (5 min)                                                                                        |
+| `BANK_HOLIDAYS_CACHE_TTL_MS`          | `43200000`                                                       | Bank holidays cache TTL (12 h)                                                                                     |
 
 ## Running locally
 
@@ -187,13 +190,68 @@ docker build -t uk-public-data-mcp .
 docker run --rm -it uk-public-data-mcp
 ```
 
-Or with Docker Compose:
+The image runs as the non-root `node` user.
+
+## Deploy with Coolify and Traefik
+
+The root `docker-compose.yml` is configured for Coolify's Docker Compose
+deployment. It runs the MCP server over HTTP and includes Traefik labels routing
+`ukdatamcp.excelemma.site` to the container's port `3000`. Create the matching
+Cloudflare DNS record pointing at the VPS, then deploy this repository in
+Coolify using the Compose file. With Cloudflare proxying enabled and SSL/TLS
+set to Flexible, the origin connection is HTTP; do not enable an origin-side
+HTTP-to-HTTPS redirect for this route. The MCP endpoint is
+`https://ukdatamcp.excelemma.site/mcp`; check availability at
+`https://ukdatamcp.excelemma.site/health`.
+
+The same Compose file also deploys the MCP Inspector at
+`https://inspector.excelemma.site`. This is a single-level subdomain so it is
+covered by Cloudflare's standard wildcard edge certificate for
+`*.excelemma.site`. Create a Cloudflare DNS record for that subdomain pointing
+to the VPS. In Coolify, set the runtime environment variable `INSPECTOR_TOKEN`
+to a strong random value, then redeploy. Open the Inspector subdomain and, when
+prompted for its proxy session token, enter that same value. Connect using
+**Streamable HTTP** and the internal MCP URL
+`http://uk-public-data-mcp:3000/mcp`; the Inspector proxy reaches the backend
+over the Compose network, bypassing Cloudflare for MCP requests.
+
+Set `COMPANIES_HOUSE_API_KEY` as a runtime environment variable in Coolify if
+you need Companies House tools. No build-time secret is needed.
+
+## Deploy the MCP server to a VPS
+
+The VPS Compose configuration keeps the MCP server running with Docker's
+`unless-stopped` restart policy. Caddy provides HTTPS automatically, while the
+application port stays private to the Docker network.
+
+Requirements: a VPS with Docker Compose, a DNS name pointed at the VPS, and
+inbound TCP ports 80 and 443 open in the VPS firewall. Deploy the repository to
+the VPS, then from the repository directory:
 
 ```bash
-docker compose up --build
+export MCP_DOMAIN=mcp.example.com
+export COMPANIES_HOUSE_API_KEY=your-key # optional; needed only for Companies House tools
+docker compose -f docker-compose.vps.yml up -d --build
 ```
 
-The image runs as the non-root `node` user.
+Replace `mcp.example.com` with your DNS name. Keep the API key out of source
+control; for persistent deployments, put `MCP_DOMAIN` and
+`COMPANIES_HOUSE_API_KEY` in a local `.env` file on the VPS (the file is ignored
+by Git), then run the Compose command. The MCP endpoint is
+`https://mcp.example.com/mcp`; its health check is `https://mcp.example.com/health`.
+Check service logs with:
+
+```bash
+docker compose -f docker-compose.vps.yml logs -f
+```
+
+If you keep the Inspector UI on Render, set `ALLOWED_MCP_TARGET` on its
+`uk-public-data-mcp-inspector` service to the VPS origin (for example,
+`https://mcp.example.com`) and redeploy that service. In the Inspector, connect
+to the VPS MCP endpoint at `https://mcp.example.com/mcp`. Update the matching
+value in `render.yaml` as well so a later Blueprint sync does not restore the
+old Render backend address. The MCP endpoint itself is public; only publish it
+if that is appropriate for your use.
 
 ## Deploy to Render (one click)
 
@@ -223,7 +281,8 @@ In the Inspector, select **Streamable HTTP**, enter
 `https://uk-public-data-mcp.onrender.com/mcp`, and click **Connect**.
 
 Free Render instances sleep after inactivity, so the first request after idle
-may take a minute to wake up.
+may take a minute to wake up. Use the VPS deployment above to keep the MCP
+backend available continuously without upgrading the Render plan.
 
 ## Testing
 

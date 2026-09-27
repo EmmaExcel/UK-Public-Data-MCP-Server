@@ -29,3 +29,21 @@ services:
       - "traefik.http.routers.uk-public-data-mcp.rule=Host(`ukdatamcp.excelemma.site`)"
       - "traefik.http.services.uk-public-data-mcp.loadbalancer.server.port=3000"
     restart: unless-stopped
+
+  uk-public-data-mcp-inspector:
+    build:
+      context: ./inspector-render
+      dockerfile: Dockerfile
+    environment:
+      PORT: 10000
+      MCP_PROXY_FULL_ADDRESS: https://inspector.excelemma.site
+      MCP_PROXY_AUTH_TOKEN: ${INSPECTOR_TOKEN:?Set INSPECTOR_TOKEN in Coolify}
+      DANGEROUSLY_OMIT_AUTH: "true"
+      ALLOWED_MCP_TARGET: http://uk-public-data-mcp:3000
+    depends_on:
+      - uk-public-data-mcp
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.uk-public-data-mcp-inspector.rule=Host(`inspector.excelemma.site`)"
+      - "traefik.http.services.uk-public-data-mcp-inspector.loadbalancer.server.port=10000"
+    restart: unless-stopped
