@@ -4,9 +4,9 @@ services:
       context: .
       dockerfile: Dockerfile
     environment:
-      NODE_ENV: development
+      NODE_ENV: production
       LOG_LEVEL: info
-      MCP_TRANSPORT: stdio
+      MCP_TRANSPORT: http
       PORT: 3000
       COMPANIES_HOUSE_API_KEY: ${COMPANIES_HOUSE_API_KEY:-}
       COMPANIES_HOUSE_BASE_URL: ${COMPANIES_HOUSE_BASE_URL:-https://api.company-information.service.gov.uk}
@@ -24,5 +24,8 @@ services:
       ODS_CACHE_TTL_MS: ${ODS_CACHE_TTL_MS:-86400000}
       POLICE_CACHE_TTL_MS: ${POLICE_CACHE_TTL_MS:-300000}
       BANK_HOLIDAYS_CACHE_TTL_MS: ${BANK_HOLIDAYS_CACHE_TTL_MS:-43200000}
-    stdin_open: true
-    tty: true
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.uk-public-data-mcp.rule=Host(`ukdatamcp.excelemma.site`)"
+      - "traefik.http.services.uk-public-data-mcp.loadbalancer.server.port=3000"
+    restart: unless-stopped
