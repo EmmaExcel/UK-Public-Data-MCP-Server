@@ -7,8 +7,14 @@ const PORT = Number(process.env.PORT || 10000);
 const CLIENT_TARGET = 'http://127.0.0.1:6274';
 const PROXY_TARGET = 'http://127.0.0.1:6277';
 
-const INTERNAL_TOKEN = process.env.MCP_PROXY_AUTH_TOKEN || 'uk-public-data-demo';
 const ALLOWED_MCP_TARGET = process.env.ALLOWED_MCP_TARGET || 'https://ukdatamcp.excelemma.site';
+const DEFAULT_MCP_SERVER_URL = process.env.DEFAULT_MCP_SERVER_URL;
+const MCP_PROXY_FULL_ADDRESS = process.env.MCP_PROXY_FULL_ADDRESS;
+const MCP_PROXY_TOKEN = process.env.MCP_PROXY_TOKEN;
+
+if (!MCP_PROXY_TOKEN) {
+  throw new Error('MCP_PROXY_TOKEN must be set before starting the Inspector proxy');
+}
 
 const proxy = httpProxy.createProxyServer({
   ws: true,
@@ -46,6 +52,39 @@ function sendJson(res, statusCode, payload) {
   if (res.headersSent) return;
   res.writeHead(statusCode, { 'content-type': 'application/json' });
   res.end(JSON.stringify(payload));
+}
+
+function redirectToDefaultConnection(req, res) {
+  if (req.method !== 'GET' || !DEFAULT_MCP_SERVER_URL || !MCP_PROXY_FULL_ADDRESS) {
+    return false;
+  }
+
+  const url = new URL(req.url ?? '/', `http://${req.headers.host ?? 'localhost'}`);
+  if (url.pathname !== '/') {
+    return false;
+  }
+
+  const defaults = {
+    transport: 'streamable-http',
+    serverUrl: DEFAULT_MCP_SERVER_URL,
+    MCP_PROXY_FULL_ADDRESS,
+  };
+  let changed = false;
+
+  for (const [key, value] of Object.entries(defaults)) {
+    if (!url.searchParams.has(key)) {
+      url.searchParams.set(key, value);
+      changed = true;
+    }
+  }
+
+  if (!changed) {
+    return false;
+  }
+
+  res.writeHead(302, { location: `${url.pathname}${url.search}` });
+  res.end();
+  return true;
 }
 
 async function handleMcp(req, res) {
@@ -110,6 +149,10 @@ async function handleMcp(req, res) {
 const server = http.createServer((req, res) => {
   const path = (req.url ?? '/').split('?')[0];
 
+  if (redirectToDefaultConnection(req, res)) {
+    return;
+  }
+
   if (path === '/mcp') {
     void handleMcp(req, res);
     return;
@@ -119,7 +162,7 @@ const server = http.createServer((req, res) => {
   if (target === PROXY_TARGET) {
     proxy.web(req, res, {
       target,
-      headers: { 'x-mcp-proxy-auth': INTERNAL_TOKEN },
+      headers: { authorization: `Bearer ${MCP_PROXY_TOKEN}` },
     });
     return;
   }
@@ -132,7 +175,7 @@ server.on('upgrade', (req, socket, head) => {
   if (routeFor(path) === PROXY_TARGET) {
     proxy.ws(req, socket, head, {
       target: PROXY_TARGET,
-      headers: { 'x-mcp-proxy-auth': INTERNAL_TOKEN },
+      headers: { authorization: `Bearer ${MCP_PROXY_TOKEN}` },
     });
     return;
   }

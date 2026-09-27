@@ -208,12 +208,13 @@ The same Compose file also deploys the MCP Inspector at
 `https://inspector.excelemma.site`. This is a single-level subdomain so it is
 covered by Cloudflare's standard wildcard edge certificate for
 `*.excelemma.site`. Create a Cloudflare DNS record for that subdomain pointing
-to the VPS. In Coolify, set the runtime environment variable `INSPECTOR_TOKEN`
-to a strong random value, then redeploy. Open the Inspector subdomain and, when
-prompted for its proxy session token, enter that same value. Connect using
-**Streamable HTTP** and the internal MCP URL
-`http://uk-public-data-mcp:3000/mcp`; the Inspector proxy reaches the backend
-over the Compose network, bypassing Cloudflare for MCP requests.
+to the VPS. On first load, the Inspector is preconfigured for **Streamable
+HTTP** and the internal MCP URL `http://uk-public-data-mcp:3000/mcp`; visitors
+only need to click **Connect**. The Inspector proxy keeps authentication
+enabled: its token is generated inside the container and added to internal
+proxy requests by the reverse proxy, so visitors do not need the proxy address
+or token. MCP requests reach the backend over the Compose network, bypassing
+Cloudflare.
 
 Set `COMPANIES_HOUSE_API_KEY` as a runtime environment variable in Coolify if
 you need Companies House tools. No build-time secret is needed.

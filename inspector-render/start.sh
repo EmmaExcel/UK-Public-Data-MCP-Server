@@ -2,8 +2,9 @@
 set -e
 
 export MCP_PROXY_FULL_ADDRESS="${MCP_PROXY_FULL_ADDRESS:-${RENDER_EXTERNAL_URL:-http://localhost:${PORT}}}"
-export MCP_PROXY_AUTH_TOKEN="${MCP_PROXY_AUTH_TOKEN:-uk-public-data-demo}"
-export DANGEROUSLY_OMIT_AUTH="${DANGEROUSLY_OMIT_AUTH:-true}"
+export MCP_PROXY_TOKEN="${MCP_PROXY_TOKEN:-$(node -e "process.stdout.write(require('node:crypto').randomBytes(32).toString('hex'))")}"
+export ALLOWED_ORIGINS="${ALLOWED_ORIGINS:-${MCP_PROXY_FULL_ADDRESS}}"
+unset DANGEROUSLY_OMIT_AUTH
 
 mcp-inspector &
 INSPECTOR_PID=$!
