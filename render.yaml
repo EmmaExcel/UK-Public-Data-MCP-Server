@@ -23,3 +23,6 @@ services:
     dockerfilePath: ./inspector-render/Dockerfile
     dockerContext: ./inspector-render
     healthCheckPath: /
+    envVars:
+      - key: ALLOWED_MCP_TARGET
+        value: https://ukdatamcp.excelemma.site

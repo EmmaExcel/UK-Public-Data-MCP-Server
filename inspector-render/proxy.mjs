@@ -8,7 +8,7 @@ const CLIENT_TARGET = 'http://127.0.0.1:6274';
 const PROXY_TARGET = 'http://127.0.0.1:6277';
 
 const INTERNAL_TOKEN = process.env.MCP_PROXY_AUTH_TOKEN || 'uk-public-data-demo';
-const ALLOWED_MCP_TARGET = process.env.ALLOWED_MCP_TARGET || 'https://uk-public-data-mcp.onrender.com';
+const ALLOWED_MCP_TARGET = process.env.ALLOWED_MCP_TARGET || 'https://ukdatamcp.excelemma.site';
 
 const proxy = httpProxy.createProxyServer({
   ws: true,
